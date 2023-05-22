@@ -1,6 +1,6 @@
-class Menu extends Phaser.Scene{ //creating js class 'menu' that extends phaser's predef scene object
-    constructor() // The constructor (a special method for creating and initializing an object) uses
-    {             // the "super" keyword to call the constructor of the super class
+class Menu extends Phaser.Scene{
+    constructor()
+    {
         super("menuScene");
     }
 

@@ -1,6 +1,6 @@
-class Play extends Phaser.Scene{ //creating js class 'menu' that extends phaser's predef scene object
-    constructor() // The constructor (a special method for creating and initializing an object) uses
-    {             // the "super" keyword to call the constructor of the super class
+class Play extends Phaser.Scene{ 
+    constructor() 
+    {             
         super("playScene");
         this.VEL = 150;
     }
@@ -15,7 +15,7 @@ class Play extends Phaser.Scene{ //creating js class 'menu' that extends phaser'
       
     create(){
         // place map sprite
-        this.starfield = this.add.tileSprite(0, 0, 1280, 1281, 'map').setOrigin(0, 0);
+        this.starfield = this.add.sprite(0, 0, 'map').setOrigin(0, 0);
         // add character (placeholder sprite)
         this.character = this.physics.add.sprite(this.sys.game.config.width / 2 + 50, this.sys.game.config.height/2, 'character',0);
         // Add ten enemies, staggered by 40 pixels. Potentially move this into update so we can change the amount of enemies according to waves.
@@ -65,6 +65,7 @@ class Play extends Phaser.Scene{ //creating js class 'menu' that extends phaser'
 
 
      }
+     
      update() {
         
         this.elapsed = parseInt(this.clock.getElapsedSeconds());
