@@ -5,7 +5,7 @@ class Play extends Phaser.Scene {
 
     preload(){
         //load character image
-        this.load.image('player', './assets/wizard.png');
+        //this.load.image('player', './assets/wizard.png');
         //load map image
         this.load.image('map', './assets/map.png');
         //load crawler image
@@ -15,6 +15,13 @@ class Play extends Phaser.Scene {
         //load mouse image
         this.load.image('mouse', './assets/rocket.png');
         this.load.image('WizardSpell', './assets/WizardSpell.png');
+        this.load.spritesheet({key: 'player',
+                                url: './assets/wizard.png',
+                            frameConfig:{
+                                frameWidth: 31,
+                                frameHeight: 53,
+                                startFrame: 0,
+                            }});
     }
 
     create(){
@@ -166,18 +173,22 @@ class Play extends Phaser.Scene {
         if(keyA.isDown)
         {
             this.direction.x = -1;
+            this.player.setFrame(1);
         }
         else if (keyD.isDown)
         {
+            this.player.setFrame(3);
             this.direction.x = 1;
         }
 
         if (keyW.isDown)
         {
+            this.player.setFrame(0);
             this.direction.y = -1;
         }
         else if (keyS.isDown)
         {
+            this.player.setFrame(2);
             this.direction.y = 1;
         }
         this.direction.normalize();
