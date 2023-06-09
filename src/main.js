@@ -14,7 +14,9 @@ let config = {
     },
 }
 
-let cursor, keyQ, keyW, keyA, keyS, keyD, keyE, keyR, wizardTimer, towerTimer, waveTimer, waveCounter, crystals;
+let cursor, keyQ, keyW, keyA, keyS, keyD, keyE, keyR, wizardTimer, towerTimer, waveTimer, waveCounter, crystals, upgradePrice;
+let wizardUpgrade = [];
+let towerUpgrade = [];
 const SC_VAL = 10;
 const SC_DAM = 10;
 

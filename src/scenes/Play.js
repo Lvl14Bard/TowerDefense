@@ -137,14 +137,15 @@ class Play extends Phaser.Scene {
         // });
 
         //nothing special
-        this.physics.add.collider(this.crystalTower, this.wizardSpellGroup);
+        //this.physics.add.collider(this.crystalTower, this.wizardSpellGroup);
 
         //input events
         this.input.on('pointerdown', (pointer) => {
-            if(wizardTimer>0) return;
-            this.mouse.copyPosition(pointer);
-            this.fireWizardSpell(this.mouse);
-            wizardTimer = this.wizardSpellGroup.fireRate;
+            if(wizardTimer <= 0){
+                this.mouse.copyPosition(pointer);
+                this.fireWizardSpell(this.mouse);
+                wizardTimer = this.wizardSpellGroup.fireRate;
+            }
         })
 
 
@@ -157,7 +158,6 @@ class Play extends Phaser.Scene {
             wizardTimer--;
             towerTimer--;
             waveTimer--;
-            console.log(crystals);
         }
 
         //enemy wave spawner
@@ -214,6 +214,15 @@ class Play extends Phaser.Scene {
         this.wizHPUI.x = this.player.x;
         this.wizHPUI.y = this.player.y - 35;
         this.crystalsUI.setText("Crystals: " + crystals);
+
+        //UPGRADES TEST TEST
+        if(Phaser.Input.Keyboard.JustDown(keyQ)){
+            if(crystals>3){
+                this.wizardSpellGroup.fireRate / 2;
+                console.log("FireRate is now: " + this.wizardSpellGroup.fireRate);
+                crystals-=3;
+            }
+        }
     }
     
     fireTowerSpell() {
