@@ -171,7 +171,7 @@ class Play extends Phaser.Scene {
         }
 
         //increases wave intensity
-        if(waveTimer%3000==0){
+        if(waveTimer%1500==0){
             waveCounter++;
         }
 
