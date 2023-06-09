@@ -61,6 +61,13 @@ class Play extends Phaser.Scene {
         //this.superCrawlerGroup = new SuperCrawlerGroup(this);
 
         //create ui
+        this.cTHPUI = this.add.text(this.crystalTower.x, this.crystalTower.y-40, "HP: "+ this.crystalTower.hp, {fontsize: '32px'})
+        .setOrigin(0.5, 0.5);
+        this.wizHPUI = this.add.text(this.player.x, this.player.y-35, "HP: "+ this.player.hp, {fontsize: '32px'})
+        .setOrigin(0.5, 0.5);
+        this.crystalsUI = this.add.text(this.crystalTower.x, this.crystalTower.y + 40, "Crystals: " + crystals, {fontSize: '16px'})
+        .setOrigin(0.5, 0.5);
+
 
         //initialize timers
         wizardTimer = this.wizardSpellGroup.fireRate;
@@ -163,6 +170,7 @@ class Play extends Phaser.Scene {
             }
         }
 
+        //increases wave intensity
         if(waveTimer%3000==0){
             waveCounter++;
         }
@@ -199,6 +207,13 @@ class Play extends Phaser.Scene {
             this.fireTowerSpell();
             towerTimer = this.towerSpellGroup.fireRate;
         }
+
+        //update UI
+        this.cTHPUI.setText("HP: " + this.crystalTower.hp);
+        this.wizHPUI.setText("HP: " + this.player.hp);
+        this.wizHPUI.x = this.player.x;
+        this.wizHPUI.y = this.player.y - 35;
+        this.crystalsUI.setText("Crystals: " + crystals);
     }
     
     fireTowerSpell() {
