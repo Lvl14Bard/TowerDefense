@@ -1,3 +1,14 @@
+//TODO: Add enemy that tracks player (this could be an object that is spawned on its own instead of part of a group)
+//Add tutorial UI (Controls printed out at bottom of screen)
+//Add exposition UI (Fade in, fade out)
+//Add Beginning menu scene (Play, credits)
+//Add ending scene or transition (Prints total crystals, says Thesis Denied or something)
+//Add upgrade system (upgrade arrays loop through types of upgrades. Q increases Qasting, E increases towEr)
+//Add particle effects
+//Make enemies speed up overtime?
+//Add UI to show the upgrade that you got
+//
+
 class Play extends Phaser.Scene {
     constructor(){
         super("playScene");
