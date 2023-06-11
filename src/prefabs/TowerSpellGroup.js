@@ -3,7 +3,7 @@ class TowerSpellGroup extends Phaser.Physics.Arcade.Group {
         super(scene.physics.world, scene);
         this.scene = scene;
         this.fireSpeed = 200;
-        this.fireRate = 200;
+        this.fireRate = 600;
         this.numSpellsUp = 1;
         this.damage = 500;
         this.scl = 1;

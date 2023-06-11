@@ -3,7 +3,6 @@
 //Add exposition UI (Fade in, fade out)
 //Add Beginning menu scene (Play, credits)
 //Add ending scene or transition (Prints total crystals, says Thesis Denied or something)
-//Add upgrade system (upgrade arrays loop through types of upgrades. Q increases Qasting, E increases towEr)
 //Add particle effects
 //Make enemies speed up overtime?
 //Add UI to show the upgrade that you got
@@ -42,6 +41,9 @@ class Play extends Phaser.Scene {
         waveTimer = 6000;
         waveCounter = 1;
         upgradePrice = 1;
+        spellSplit = 0;
+        multiCast = 0;
+
 
         //set world bounds
         this.physics.world.setBounds(0,0,1919,1079);
@@ -99,20 +101,26 @@ class Play extends Phaser.Scene {
         //spell destroys crawler and self. Adds crystal
         this.physics.add.overlap(this.wizardSpellGroup, this.crawlerGroup, (wizSpell, crawler) => {
             //wizSpell.destroy(true);
+            for(let i = spellSplit; i > 0; i--){
+                this.wizardSpellGroup.castSpell(wizSpell.x, wizSpell.y, this.crawlerGroup.getRandomTarget());
+            }
             crawler.destroy(true);
             crystals++;
         });
 
         //spell destorys super crawler and self. Adds crystal
-        this.physics.add.overlap(this.wizardSpellGroup, this.superCrawlerGroup, (wizSpell, superCrawler) => {
-            //wizSpell.destroy(true);
-            superCrawler.destroy(true);
-            //this.crystals += SC_VAL;
-        });
+        // this.physics.add.overlap(this.wizardSpellGroup, this.superCrawlerGroup, (wizSpell, superCrawler) => {
+        //     //wizSpell.destroy(true);
+        //     superCrawler.destroy(true);
+        //     //this.crystals += SC_VAL;
+        // });
 
         //spell destroys crawler and self. Adds crystal
         this.physics.add.overlap(this.towerSpellGroup, this.crawlerGroup, (towSpell, crawler) => {
             //towSpell.destroy(true);
+            // for(let i = spellSplit; i > 0; i--){
+            //     this.wizardSpellGroup.castSpell(towSpell.x, towSpell.y, this.crawlerGroup.getRandomTarget());
+            // }
             crawler.destroy(true);
             crystals++;
         });
@@ -170,7 +178,7 @@ class Play extends Phaser.Scene {
 
     update(time, delta){
 
-        //timers
+        // timers
         if(delta >= 1){
             wizardTimer--;
             towerTimer--;
@@ -181,7 +189,7 @@ class Play extends Phaser.Scene {
         if(waveTimer%100==0){
             for(let i = waveCounter; i > 0; i--){
                 let temp = this.spawnCircle();
-                this.crawlerGroup.create().setX(temp[0]).setY(temp[1]).setScale(1.5,1.5);
+                this.crawlerGroup.create().setX(temp[0]).setY(temp[1]).setScale(1.25,1.25);
                 let last = this.crawlerGroup.getChildren().length-1;
                 this.physics.moveToObject(this.crawlerGroup.getChildren()[last], this.crystalTower, this.crawlerGroup.moveSpeed);
             }
@@ -190,6 +198,10 @@ class Play extends Phaser.Scene {
         //increases wave intensity
         if(waveTimer%1500==0){
             waveCounter++;
+        }
+
+        if(waveTimer==0){
+            waveTimer=0;
         }
 
         //player movement
@@ -224,7 +236,7 @@ class Play extends Phaser.Scene {
             this.fireTowerSpell();
             towerTimer = this.towerSpellGroup.fireRate;
         }
-
+        
         //update UI
         this.cTHPUI.setText("HP: " + this.crystalTower.hp);
         this.wizHPUI.setText("HP: " + this.player.hp);
@@ -237,6 +249,7 @@ class Play extends Phaser.Scene {
         this.wizUpgradeUI.y = this.player.y;
         // this.towUpgradeUI.x = this.player.x + 70;
         // this.towUpgradeUI.y = this.player.y;
+        
 
         //UPGRADES
         if(Phaser.Input.Keyboard.JustDown(keyQ)) this.wizardUpgrade();
@@ -249,7 +262,10 @@ class Play extends Phaser.Scene {
     }
 
     fireWizardSpell(target) {
-        this.wizardSpellGroup.castSpell(this.player.x, this.player.y, target);
+        this.wizardSpellGroup.castSpell(this.player.x, this.player.y, target)
+        for(let i = 0; i < multiCast; i++){
+            this.wizardSpellGroup.castSpell(this.player.x, this.player.y, this.crawlerGroup.getRandomTarget());
+        };
     }
 
     spawnCircle(){
@@ -261,19 +277,35 @@ class Play extends Phaser.Scene {
 
     wizardUpgrade(){
         if(crystals>=upgradePrice*2){
-            switch(wizardUpgradeCounter%3){
+            switch(wizardUpgradeCounter%8){
                 case 0:
-                    this.wizardSpellGroup.fireRate = 200 / upgradePrice;
-                    this.towerSpellGroup.fireRate = this.wizardSpellGroup.fireRate;
+                    this.wizardSpellGroup.fireRate *= 0.5;
+                    this.towerSpellGroup.fireRate = this.wizardSpellGroup.fireRate*2;
                     break;
                 case 1:
-                    this.wizardSpellGroup.fireSpeed = 200 + 50*upgradePrice;
+                    this.wizardSpellGroup.fireSpeed *= 2;
                     this.towerSpellGroup.fireSpeed = this.wizardSpellGroup.fireSpeed;
                     break;
                 case 2:
-                    this.wizardSpellGroup.scl += upgradePrice*0.25;
+                    this.wizardSpellGroup.scl += upgradePrice*0.2;
                     this.towerSpellGroup.scl = this.wizardSpellGroup.scl;
                     break;
+                case 3:
+                    spellSplit++;
+                    break;
+                case 4:
+                    multiCast++;
+                    break;
+                case 5:
+                    this.player.hp += upgradePrice*2;
+                    break;
+                case 6:
+                    this.crystalTower.hp += upgradePrice*2;
+                    break;
+                case 7:
+                    this.player.moveSpeed *= 1.25;
+                    break;
+
             }
             crystals -= upgradePrice*2;
             upgradePrice++;

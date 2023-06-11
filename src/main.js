@@ -14,8 +14,8 @@ let config = {
     },
 }
 
-let cursor, keyQ, keyW, keyA, keyS, keyD, keyE, keyR, wizardTimer, towerTimer, waveTimer, waveCounter, crystals, upgradePrice;
-let wizardUpgradeText = ["Cast Rate", "Spell Speed", "Health"];
+let cursor, keyQ, keyW, keyA, keyS, keyD, keyE, keyR, wizardTimer, towerTimer, waveTimer, waveCounter, crystals, upgradePrice, spellSplit, multiCast;
+let wizardUpgradeText = ["Cast Rate", "Spell Speed", "Spell Split", "MultiCast"];
 let towerUpgradeText = ["Cast Rate", "Spell Speed", "Health"];
 let wizardUpgradeCounter = 0;
 let towerUpgradeCounter = 0;
