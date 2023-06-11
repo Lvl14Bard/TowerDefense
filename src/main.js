@@ -15,8 +15,11 @@ let config = {
 }
 
 let cursor, keyQ, keyW, keyA, keyS, keyD, keyE, keyR, wizardTimer, towerTimer, waveTimer, waveCounter, crystals, upgradePrice;
-let wizardUpgrade = [];
-let towerUpgrade = [];
+let wizardUpgradeText = ["Cast Rate", "Spell Speed", "Health"];
+let towerUpgradeText = ["Cast Rate", "Spell Speed", "Health"];
+let wizardUpgradeCounter = 0;
+let towerUpgradeCounter = 0;
+
 const SC_VAL = 10;
 const SC_DAM = 10;
 

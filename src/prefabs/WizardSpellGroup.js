@@ -6,12 +6,18 @@ class WizardSpellGroup extends Phaser.Physics.Arcade.Group {
         this.fireRate = 200;
         this.numSpellsUp = 1;
         this.damage = 1;
+        this.scl = 1;
+        this.cWB = false;
         this.createMultiple({
             classType: WizardSpell,
             frameQuantity: 999,
             active: false,
             visible: false,
-            key: 'WizSpell'
+            key: 'WizSpell',
+            setScale: {
+                x: this.scl,
+                y: this.scl,
+            },
         })
     }
 
@@ -29,7 +35,7 @@ class WizardSpellGroup extends Phaser.Physics.Arcade.Group {
         //     }
         // }
         // let spell = this.getChildren()[this.getChildren().length];
-        let spell = this.create(x, y, target).setBounce(1, 1).setActive(true).setVisible(true);
+        let spell = this.create(x, y, target).setActive(true).setVisible(true).setScale(this.scl, this.scl);
         this.scene.physics.moveToObject(spell, target, this.fireSpeed);
     }
 }

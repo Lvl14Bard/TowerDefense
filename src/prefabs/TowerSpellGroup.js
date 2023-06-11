@@ -3,15 +3,17 @@ class TowerSpellGroup extends Phaser.Physics.Arcade.Group {
         super(scene.physics.world, scene);
         this.scene = scene;
         this.fireSpeed = 200;
-        this.fireRate = 1000;
+        this.fireRate = 200;
         this.numSpellsUp = 1;
         this.damage = 500;
+        this.scl = 1;
         this.createMultiple({
             classType: TowerSpell,
             frameQuantity: this.numSpellsUp,
             active: false,
             visible: false,
             key: 'TowSpell',
+            collideWorldBounds: true,
         })
     }
 
@@ -28,7 +30,7 @@ class TowerSpellGroup extends Phaser.Physics.Arcade.Group {
         //         }
         //     }
         // }
-        let spell = this.create(x, y, target).setBounce(1, 1).setActive(true).setVisible(true);
+        let spell = this.create(x, y, target).setActive(true).setVisible(true).setScale(this.scl, this.scl);
         this.scene.physics.moveToObject(spell, target, this.fireSpeed);
     }
 }
